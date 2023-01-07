@@ -1,9 +1,8 @@
 import React from 'react'
-// import UsersList from './../../user/components/UsersList';
-
+import './NewPlaces.css'
+import Input from './../../shared/components/FormElements/Input';
 export const NewPlace = () => {
-  return (
-    <div>NewPlace works</div>
-    // <UsersList/>
-  )
+  return <form className="place-form">
+    <Input element="input" type="text" label="New Place"/>
+  </form>
 }
