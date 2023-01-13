@@ -2,12 +2,13 @@ import React, { useReducer, useEffect } from "react";
 
 import { validate } from "../../../util/validators";
 import "./Input.css";
+
 const inputReducer = (state, action) => {
   switch (action.type) {
     case "CHANGE":
       return {
         ...state,
-        value: action.value,
+        value: action.val,
         isValid: validate(action.val, action.validators),
       };
     case "TOUCH":
@@ -22,15 +23,17 @@ const inputReducer = (state, action) => {
 
 const Input = (props) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: "",
-    isValid: false,
+    value: props.value || "",
+    isValid: props.valid || false,
     isTouched: false,
   });
   const { id, onInput } = props;
-  const { value, isValid}=inputState
+  const { value, isValid } = inputState;
+
   useEffect(() => {
     onInput(id, value, isValid);
   }, [id, value, isValid, onInput]);
+
   const changeHandler = (event) => {
     dispatch({
       type: "CHANGE",
@@ -70,6 +73,7 @@ const Input = (props) => {
     >
       <label htmlFor={props.id}> {props.label}</label>
       {element}
+
       {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
     </div>
   );
